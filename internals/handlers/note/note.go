@@ -1,12 +1,11 @@
 package noteHandler
 
 import (
-	"github.com/alitemel89/golang-restapi/database"
-	"github.com/alitemel89/golang-restapi/internals/model"
+	"github.com/alitemel89/gofiber-restapi/database"
+	"github.com/alitemel89/gofiber-restapi/internals/model"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 )
-
 
 func CreateNote(c *fiber.Ctx) error {
 	db := database.DB
