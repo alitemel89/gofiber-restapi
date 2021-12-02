@@ -50,8 +50,8 @@ func GetNotes(c *fiber.Ctx) error {
 func UpdateNote(c *fiber.Ctx) error {
 	type updateNote struct {
 		Title string `json:"title"`
-		SubTitle string `json:"sub_title"`
-		Text string `json:"Text"`
+		SubTitle string `json:"subtitle"`
+		Text string `json:"text"`
 	}
 
 	db := database.DB
