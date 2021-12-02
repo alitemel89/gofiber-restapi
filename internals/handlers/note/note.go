@@ -46,3 +46,44 @@ func GetNotes(c *fiber.Ctx) error {
 	// Else return notes
 	return c.JSON(fiber.Map{"status": "success", "message": "Notes Found", "data": notes})
 }
+
+func UpdateNote(c *fiber.Ctx) error {
+	type updateNote struct {
+		Title string `json:"title"`
+		SubTitle string `json:"sub_title"`
+		Text string `json:"Text"`
+	}
+
+	db := database.DB
+	var note model.Note
+
+	// Read the param noteId
+	id := c.Params("noteId")
+
+	// Find the note with the given Id
+	db.Find(&note, "id = ?", id)
+
+	// If no such note present return an error
+	if note.ID == uuid.Nil {
+		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "No note present", "data": nil})
+	}
+
+	// Store the body containing the updated data and return error if encounterd
+	var updateNoteData updateNote
+	err := c.BodyParser(&updateNoteData)
+
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"status": "error", "message":"Review your input", "data": err })
+	}
+
+	// Edit the note
+	note.Title = updateNoteData.Title
+	note.Subtitle = updateNoteData.SubTitle
+	note.Text = updateNoteData.Text
+
+	// Save the changes
+	db.Save(&note)
+
+	return c.JSON(fiber.Map{"status": "success", "message": "Notes Found"})
+
+}
