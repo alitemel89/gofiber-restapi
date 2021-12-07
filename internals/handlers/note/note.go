@@ -47,6 +47,7 @@ func GetNotes(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"status": "success", "message": "Notes Found", "data": notes})
 }
 
+// Update a Note
 func UpdateNote(c *fiber.Ctx) error {
 	type updateNote struct {
 		Title string `json:"title"`
@@ -88,14 +89,16 @@ func UpdateNote(c *fiber.Ctx) error {
 
 }
 
-func DeleteNote(c *fiber.Ctx) error  {
+
+// Delete note
+func DeleteNote(c *fiber.Ctx) error {
 	db := database.DB
 	var note model.Note
 
 	// Read the param noteId
 	id := c.Params("noteId")
 
-	// Find the note with given Id
+	// Find the note with the given Id
 	db.Find(&note, "id = ?", id)
 
 	// If no such note present return an error
@@ -111,6 +114,5 @@ func DeleteNote(c *fiber.Ctx) error  {
 	}
 
 	// Return success message
-	return c.JSON(fiber.Map{"status": "success", "message":"Note Deleted."})
-
+	return c.JSON(fiber.Map{"status": "success", "message": "Deleted Note"})
 }
