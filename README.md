@@ -1,4 +1,6 @@
 # gofiber-restapi
+
+Go, Fiber, GORM, Postgresql
  
 .env example
 
